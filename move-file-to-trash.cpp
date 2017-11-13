@@ -1,6 +1,6 @@
 #include "move-file-to-trash.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <Windows.h>
 #include <vector>
 #include <sstream>
@@ -32,4 +32,4 @@ void move_file_to_trash(const std::wstring& filename)
     }
 }
 
-#endif // WIN32
+#endif // _WIN32
