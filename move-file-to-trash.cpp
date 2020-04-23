@@ -5,7 +5,7 @@
 #include <vector>
 #include <sstream>
 
-void move_file_to_trash(const std::wstring& filename)
+bool move_file_to_trash(const std::wstring& filename)
 {
     // Need to double-terminate the string; see https://stackoverflow.com/a/42555504/19254
     const size_t length = filename.length();
@@ -25,7 +25,13 @@ void move_file_to_trash(const std::wstring& filename)
     // (source: https://msdn.microsoft.com/en-us/library/windows/desktop/bb762164(v=vs.85).aspx)
     const bool success = ret == 0;
 
-    if (!success) {
+    if (success) {
+        return true;
+    }
+    else if (ret == ERROR_CANCELLED) {
+        return false; // User didn't confirm the operation
+    }
+    else {
         std::ostringstream error;
         error << "Unable to move the file to the recycle bin; error code = " << ret << " (see Winerror.h to understand what the code means)";
         throw std::runtime_error(error.str());
