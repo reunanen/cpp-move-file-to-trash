@@ -14,12 +14,12 @@ bool move_file_to_trash(const std::wstring& filename)
     buffer[length] = L'\0';
     buffer[length + 1] = L'\0';
 
-    SHFILEOPSTRUCT operation;
+    SHFILEOPSTRUCTW operation;
     memset(&operation, 0, sizeof operation);
     operation.wFunc = FO_DELETE;
     operation.pFrom = buffer.data();
     operation.fFlags = FOF_ALLOWUNDO;
-    const int ret = SHFileOperation(&operation);
+    const int ret = SHFileOperationW(&operation);
 
     // "Returns zero if successful; otherwise nonzero. Applications normally should simply check for zero or nonzero."
     // (source: https://msdn.microsoft.com/en-us/library/windows/desktop/bb762164(v=vs.85).aspx)
